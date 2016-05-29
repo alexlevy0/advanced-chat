@@ -29,7 +29,7 @@ app.configure(function() {
 
 });
 
-app.get('/', function(req, res) {
+app.get('/', function(req, res){
   res.render('index.html');
 });
 
@@ -37,7 +37,7 @@ server.listen(app.get('port'), app.get('ipaddr'), function(){
 	console.log('Express server listening on  IP: ' + app.get('ipaddr') + ' and port ' + app.get('port'));
 });
 
-io.set("log level", 1);
+io.set("log level", 3);
 var people = {};
 var rooms = {};
 var sockets = [];
@@ -58,6 +58,7 @@ function purge(s, action) {
 			- same as above except except not removing user from the people object
 		3) leaves the room
 			- same as above
+
 	if the user is not an owner and (s)he's in a room:
 		1) disconnects
 			- delete user from people object
@@ -66,6 +67,7 @@ function purge(s, action) {
 			- produce error message (only owners can remove rooms)
 		3) leaves the room
 			- same as point 1 except not removing user from the people object
+
 	if the user is not an owner and not in a room:
 		1) disconnects
 			- same as above except not removing user from room.people object
@@ -194,7 +196,7 @@ io.sockets.on("connection", function (socket) {
 				return exists = true;
 		});
 		if (exists) {//provide unique username:
-			var randomNumber=Math.floor(Math.random()*1001)
+			var randomNumber=Math.floor(Math.random()*1001);
 			do {
 				proposedName = name+randomNumber;
 				_.find(people, function(key,value) {
@@ -217,8 +219,8 @@ io.sockets.on("connection", function (socket) {
 	});
 
 	socket.on("getOnlinePeople", function(fn) {
-                fn({people: people});
-        });
+        fn({people: people});
+    });
 
 	socket.on("countryUpdate", function(data) { //we know which country the user is from
 		country = data.country.toLowerCase();

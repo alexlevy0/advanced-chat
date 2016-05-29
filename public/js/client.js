@@ -45,7 +45,7 @@ if (!('webkitSpeechRecognition' in window)) {
       return;
     }
     final_transcript = '';
-    recognition.lang = "en-GB"
+    recognition.lang = "en-GB";
     recognition.start();
     $("#start_button").prop("value", "Recording ... Click to stop.");
     $("#msg").val();
@@ -245,7 +245,8 @@ $(document).ready(function() {
     $("#msg").val("w:"+name+":");
     $("#msg").focus();
   });
-/*
+
+  /*
   $("#whisper").change(function() {
     var peopleOnline = [];
     if ($("#whisper").prop('checked')) {
@@ -341,9 +342,9 @@ socket.on("history", function(data) {
   }
 });
 
-  socket.on("update", function(msg) {
+socket.on("update", function(msg) {
     $("#msgs").append("<li>" + msg + "</li>");
-  });
+});
 
   socket.on("update-people", function(data){
     //var peopleOnline = [];
@@ -388,20 +389,21 @@ socket.on("history", function(data) {
   });
 
   socket.on("roomList", function(data) {
-    $("#rooms").text("");
-    $("#rooms").append("<li class=\"list-group-item active\">List of rooms <span class=\"badge\">"+data.count+"</span></li>");
-     if (!jQuery.isEmptyObject(data.rooms)) { 
-      $.each(data.rooms, function(id, room) {
-        var html = "<button id="+id+" class='joinRoomBtn btn btn-default btn-xs' >Join</button>" + " " + "<button id="+id+" class='removeRoomBtn btn btn-default btn-xs'>Remove</button>";
-        $('#rooms').append("<li id="+id+" class=\"list-group-item\"><span>" + room.name + "</span> " + html + "</li>");
-      });
-    } else {
-      $("#rooms").append("<li class=\"list-group-item\">There are no rooms yet.</li>");
-    }
+          $("#rooms").text("");
+          $("#rooms").append("<li class=\"list-group-item active\">List of rooms <span class=\"badge\">"+data.count+"</span></li>");
+          if (!jQuery.isEmptyObject(data.rooms)) {
+              $.each(data.rooms, function(id, room) {
+                  var html = "<button id="+id+" class='joinRoomBtn btn btn-default btn-xs' >Join</button>" + " " + "<button id="+id+" class='removeRoomBtn btn btn-default btn-xs'>Remove</button>";
+                  $('#rooms').append("<li id="+id+" class=\"list-group-item\"><span>" + room.name + "</span> " + html + "</li>");
+              });
+          } else {
+              $("#rooms").append("<li class=\"list-group-item\">There are no rooms yet.</li>");
+          }
   });
 
   socket.on("sendRoomID", function(data) {
-    myRoomID = data.id;
+      console.log("sendRoomID" + JSON.stringify(data));
+      myRoomID = data.id;
   });
 
   socket.on("disconnect", function(){
