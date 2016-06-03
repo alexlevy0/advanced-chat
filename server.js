@@ -33,14 +33,14 @@ app.get('/', function(req, res){
   res.render('index.html');
 });
 
-//server.listen(app.get('port'), app.get('ipaddr'), function(){
-//	console.log('Express server listening on  IP: ' + app.get('ipaddr') + ' and port ' + app.get('port'));
-//});
-
-server.listen(app.get('port'), "109.238.6.38", function(){
-    console.log('Express server listening on port ' + app.get('port'));
+server.listen(app.get('port'), app.get('ipaddr'), function(){
+	console.log('Express server listening on  IP: ' + app.get('ipaddr') + ' and port ' + app.get('port'));
 });
 
+//server.listen(app.get('port'), "109.238.6.38", function(){
+//    console.log('Express server listening on port ' + app.get('port'));
+//});
+//
 io.set("log level", 3);
 var people = {};
 var rooms = {};
@@ -55,9 +55,9 @@ function purge(s, action) {
 		1) disconnects (i.e. leaves the whole server)
 			- advise users
 		 	- delete user from people object
-			- delete room from rooms object
-			- delete chat history
-			- remove all users from room that is owned by disconnecting user
+			- delete room from rooms object //TODO
+			- delete chat history //TODO
+			- remove all users from room that is owned by disconnecting user //TODO
 		2) removes the room
 			- same as above except except not removing user from the people object
 		3) leaves the room
