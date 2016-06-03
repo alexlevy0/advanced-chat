@@ -81,7 +81,10 @@ function timeFormat(msTime) {
 
 $(document).ready(function() {
   //setup "global" variables first
-  var socket = io.connect("127.0.0.1:3000");
+
+  var socket = io.connect("109.238.6.38:3000");
+  //var socket = io.connect("127.0.0.1:3000");
+
   var myRoomID = null;
 
   $("form").submit(function(event) {
@@ -158,7 +161,8 @@ $(document).ready(function() {
         socket.emit("typing", true);
       } else {
         clearTimeout(timeout);
-        timeout = setTimeout(timeoutFunction, 5000);
+        timeout = setTimeout(timeoutFunction, 1000);
+        //timeout = setTimeout(timeoutFunction, 0);
       }
     }
   });
@@ -167,7 +171,8 @@ $(document).ready(function() {
     if (data.isTyping) {
       if ($("#"+data.person+"").length === 0) {
         $("#updates").append("<li id='"+ data.person +"'><span class='text-muted'><small><i class='fa fa-keyboard-o'></i> " + data.person + " is typing.</small></li>");
-        timeout = setTimeout(timeoutFunction, 5000);
+        timeout = setTimeout(timeoutFunction, 2000);
+        //timeout = setTimeout(timeoutFunction, 0);
       }
     } else {
       $("#"+data.person+"").remove();
@@ -332,7 +337,9 @@ socket.on("joined", function() {
 });
 
 socket.on("history", function(data) {
-  if (data.length !== 0) {
+    console.log("history : " + JSON.stringify(data));
+
+    if (data.length !== 0) {
     $("#msgs").append("<li><strong><span class='text-warning'>Last 10 messages:</li>");
     $.each(data, function(data, msg) {
       $("#msgs").append("<li><span class='text-warning'>" + msg + "</span></li>");

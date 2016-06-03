@@ -3,7 +3,7 @@ function Room(name, id, owner) {
   this.id = id;
   this.owner = owner;
   this.people = [];
-  this.peopleLimit = 4;
+  this.peopleLimit = 10;
   this.status = "available";
   this.private = false;
 };
