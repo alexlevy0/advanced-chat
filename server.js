@@ -9,7 +9,8 @@ var express = require('express')
 
 app.configure(function() {
 	app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 3000);
-  	app.set('ipaddr', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");
+  	//app.set('ipaddr', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");
+  	app.set('ipaddr', process.env.OPENSHIFT_NODEJS_IP || "109.238.6.38");
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	app.use(express.static(__dirname + '/public'));
@@ -85,23 +86,29 @@ function purge(s, action) {
 		if (s.id === room.owner) { //user in room and owns room
 			if (action === "disconnect") {
 				io.sockets.in(s.room).emit("update", "The owner (" +people[s.id].name + ") has left the server. The room is removed and you have been disconnected from it as well.");
-				var socketids = [];
+				//var socketids = [];
+				//leave all users from room
+/*
 				for (var i=0; i<sockets.length; i++) {
 					socketids.push(sockets[i].id);
 					if(_.contains((socketids)), room.people) {
 						sockets[i].leave(room.name);
 					}
 				}
+*/
 
-				if(_.contains((room.people)), s.id) {
+				//Clean user room
+/*
+				if(_.contains(room.people, s.id)) {
 					for (var i=0; i<room.people.length; i++) {
 						people[room.people[i]].inroom = null;
 					}
 				}
+*/
 				room.people = _.without(room.people, s.id); //remove people from the room:people{}collection
-				delete rooms[people[s.id].owns]; //delete the room
+				//delete rooms[people[s.id].owns]; //delete the room
 				delete people[s.id]; //delete user from people collection
-				delete chatHistory[room.name]; //delete the chat history
+				//delete chatHistory[room.name]; //delete the chat history
 				sizePeople = _.size(people);
 				sizeRooms = _.size(rooms);
 				io.sockets.emit("update-people", {people: people, count: sizePeople});
