@@ -138,23 +138,23 @@ function purge(s, action) {
 				io.sockets.emit("roomList", {rooms: rooms, count: sizeRooms});
 			} else if (action === "leaveRoom") { //room owner leaves room
 				io.sockets.in(s.room).emit("update", "The owner (" +people[s.id].name + ") has left the room. The room is removed and you have been disconnected from it as well.");
-				var socketids = [];
-				for (var i=0; i<sockets.length; i++) {
-					socketids.push(sockets[i].id);
-					if(_.contains((socketids)), room.people) {
-						sockets[i].leave(room.name);
-					}
-				}
-
-				if(_.contains((room.people)), s.id) {
-					for (var i=0; i<room.people.length; i++) {
-						people[room.people[i]].inroom = null;
-					}
-				}
-				delete rooms[people[s.id].owns];
+				//var socketids = [];
+				//for (var i=0; i<sockets.length; i++) {
+				//	socketids.push(sockets[i].id);
+				//	if(_.contains((socketids)), room.people) {
+				//		sockets[i].leave(room.name);
+				//	}
+				//}
+                //
+				//if(_.contains((room.people)), s.id) {
+				//	for (var i=0; i<room.people.length; i++) {
+				//		people[room.people[i]].inroom = null;
+				//	}
+				//}
+				//delete rooms[people[s.id].owns];
 				people[s.id].owns = null;
 				room.people = _.without(room.people, s.id); //remove people from the room:people{}collection
-				delete chatHistory[room.name]; //delete the chat history
+				//delete chatHistory[room.name]; //delete the chat history
 				sizeRooms = _.size(rooms);
 				io.sockets.emit("roomList", {rooms: rooms, count: sizeRooms});
 			}
