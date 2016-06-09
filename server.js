@@ -9,8 +9,8 @@ var express = require('express')
 
 app.configure(function() {
 	app.set('port', process.env.OPENSHIFT_NODEJS_PORT || 3000);
-  	//app.set('ipaddr', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");
-  	app.set('ipaddr', process.env.OPENSHIFT_NODEJS_IP || "109.238.6.38");
+  	app.set('ipaddr', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");
+  	//app.set('ipaddr', process.env.OPENSHIFT_NODEJS_IP || "109.238.6.38");
 	app.use(express.bodyParser());
 	app.use(express.methodOverride());
 	app.use(express.static(__dirname + '/public'));
@@ -340,7 +340,23 @@ io.sockets.on("connection", function (socket) {
 		if (typeof people[socket.id] !== "undefined") {
 			var room = rooms[id];
 			if (socket.id === room.owner) {
-				socket.emit("update", "You are the owner of this room and you have already been joined.");
+				//socket.emit("update", "You are the owner of this room and you have already been joined.");
+                if (people[socket.id].inroom !== null) {
+                    socket.emit("update", "You are already in a room ("+rooms[people[socket.id].inroom].name+"), please leave it first to join another room.");
+                } else {
+                    room.addPerson(socket.id);
+                    people[socket.id].inroom = id;
+                    socket.room = room.name;
+                    socket.join(socket.room);
+                    user = people[socket.id];
+                    io.sockets.in(socket.room).emit("update", user.name + " has connected to " + room.name + " room.");
+                    socket.emit("update", "Welcome to " + room.name + ".");
+                    socket.emit("sendRoomID", {id: id});
+                    var keys = _.keys(chatHistory);
+                    if (_.contains(keys, socket.room)) {
+                        socket.emit("history", chatHistory[socket.room]);
+                    }
+                }
 			} else {
 				if (_.contains((room.people), socket.id)) {
 					socket.emit("update", "You have already joined this room.");
