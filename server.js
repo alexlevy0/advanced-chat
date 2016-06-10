@@ -85,7 +85,8 @@ function purge(s, action) {
 		var room = rooms[people[s.id].inroom]; //check which room user is in.
 		if (s.id === room.owner) { //user in room and owns room
 			if (action === "disconnect") {
-				io.sockets.in(s.room).emit("update", "The owner (" +people[s.id].name + ") has left the server. The room is removed and you have been disconnected from it as well.");
+				//io.sockets.in(s.room).emit("update", "The owner (" +people[s.id].name + ") has left the server. The room is removed and you have been disconnected from it as well.");
+				io.sockets.in(s.room).emit("update", "The owner (" +people[s.id].name + ") has left the server.");
 				//var socketids = [];
 				//leave all users from room
 /*
@@ -137,7 +138,8 @@ function purge(s, action) {
 				sizeRooms = _.size(rooms);
 				io.sockets.emit("roomList", {rooms: rooms, count: sizeRooms});
 			} else if (action === "leaveRoom") { //room owner leaves room
-				io.sockets.in(s.room).emit("update", "The owner (" +people[s.id].name + ") has left the room. The room is removed and you have been disconnected from it as well.");
+				//io.sockets.in(s.room).emit("update", "The owner (" +people[s.id].name + ") has left the room. The room is removed and you have been disconnected from it as well.");
+				io.sockets.in(s.room).emit("update", "The owner (" +people[s.id].name + ") has left the room.");
 				//var socketids = [];
 				//for (var i=0; i<sockets.length; i++) {
 				//	socketids.push(sockets[i].id);
@@ -151,7 +153,19 @@ function purge(s, action) {
 				//		people[room.people[i]].inroom = null;
 				//	}
 				//}
-				//delete rooms[people[s.id].owns];
+
+/*                if (_.contains((room.people), s.id)) {
+                    //var personIndex = room.people.indexOf(s.id);
+                    //room.people.splice(personIndex, 1);
+                    people[s.id].inroom = null;
+                    io.sockets.emit("update", people[s.id].name + " has left the room.");
+                    s.leave(room.name);
+                }
+                */
+                people[s.id].inroom = null;
+                s.leave(room.name);
+
+                //delete rooms[people[s.id].owns];
 				people[s.id].owns = null;
 				room.people = _.without(room.people, s.id); //remove people from the room:people{}collection
 				//delete chatHistory[room.name]; //delete the chat history
@@ -341,9 +355,10 @@ io.sockets.on("connection", function (socket) {
 			var room = rooms[id];
 			if (socket.id === room.owner) {
 				//socket.emit("update", "You are the owner of this room and you have already been joined.");
-                if (people[socket.id].inroom !== null) {
-                    socket.emit("update", "You are already in a room ("+rooms[people[socket.id].inroom].name+"), please leave it first to join another room.");
-                } else {
+
+                //if (people[socket.id].inroom !== null) {
+                 //   socket.emit("update", "You are already in a room ("+rooms[people[socket.id].inroom].name+"), please leave it first to join another room.");
+                //} else {
                     room.addPerson(socket.id);
                     people[socket.id].inroom = id;
                     socket.room = room.name;
@@ -356,7 +371,7 @@ io.sockets.on("connection", function (socket) {
                     if (_.contains(keys, socket.room)) {
                         socket.emit("history", chatHistory[socket.room]);
                     }
-                }
+                //}
 			} else {
 				if (_.contains((room.people), socket.id)) {
 					socket.emit("update", "You have already joined this room.");

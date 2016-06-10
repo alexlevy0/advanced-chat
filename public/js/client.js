@@ -82,8 +82,8 @@ function timeFormat(msTime) {
 $(document).ready(function() {
   //setup "global" variables first
 
-  var socket = io.connect("109.238.6.38:3000");
-  //var socket = io.connect("127.0.0.1:3000");
+  //var socket = io.connect("109.238.6.38:3000");
+  var socket = io.connect("127.0.0.1:3000");
 
   var myRoomID = null;
 
@@ -396,16 +396,16 @@ socket.on("update", function(msg) {
   });
 
   socket.on("roomList", function(data) {
-          $("#rooms").text("");
-          $("#rooms").append("<li class=\"list-group-item active\">List of rooms <span class=\"badge\">"+data.count+"</span></li>");
-          if (!jQuery.isEmptyObject(data.rooms)) {
-              $.each(data.rooms, function(id, room) {
-                  var html = "<button id="+id+" class='joinRoomBtn btn btn-default btn-xs' >Join</button>" + " " + "<button id="+id+" class='removeRoomBtn btn btn-default btn-xs'>Remove</button>";
-                  $('#rooms').append("<li id="+id+" class=\"list-group-item\"><span>" + room.name + "</span> " + html + "</li>");
-              });
-          } else {
-              $("#rooms").append("<li class=\"list-group-item\">There are no rooms yet.</li>");
-          }
+    $("#rooms").text("");
+    $("#rooms").append("<li class=\"list-group-item active\">List of rooms <span class=\"badge\">"+data.count+"</span></li>");
+    if (!jQuery.isEmptyObject(data.rooms)) {
+        $.each(data.rooms, function(id, room) {
+            var html = "<button id="+id+" class='joinRoomBtn btn btn-default btn-xs' >Join</button>" + " " + "<button id="+id+" class='removeRoomBtn btn btn-default btn-xs'>Remove</button>";
+            $('#rooms').append("<li id="+id+" class=\"list-group-item\"><span>" + room.name + "</span> " + html + "</li>");
+        });
+    } else {
+        $("#rooms").append("<li class=\"list-group-item\">There are no rooms yet.</li>");
+    }
   });
 
   socket.on("sendRoomID", function(data) {
