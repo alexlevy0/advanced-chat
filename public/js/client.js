@@ -82,8 +82,8 @@ function timeFormat(msTime) {
 $(document).ready(function() {
   //setup "global" variables first
 
-  //var socket = io.connect("109.238.6.38:3000");
-  var socket = io.connect("127.0.0.1:3000");
+  var socket = io.connect("109.238.6.38:3000");
+  //var socket = io.connect("127.0.0.1:3000");
 
   var myRoomID = null;
 
