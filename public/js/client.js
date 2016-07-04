@@ -396,6 +396,7 @@ socket.on("update", function(msg) {
   });
 
   socket.on("roomList", function(data) {
+    console.log("on roomList :" + JSON.stringify(data))
     $("#rooms").text("");
     $("#rooms").append("<li class=\"list-group-item active\">List of rooms <span class=\"badge\">"+data.count+"</span></li>");
     if (!jQuery.isEmptyObject(data.rooms)) {
