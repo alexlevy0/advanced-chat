@@ -305,11 +305,13 @@ io.sockets.on("connection", function (socket) {
 				io.sockets.in(socket.room).emit("chat", msTime, people[socket.id], msg);
 				socket.emit("isTyping", false);
                 chatHistory[socket.room].push(people[socket.id].name + ": " + msg);
+/*
                 var room = rooms[people[socket.id].inroom];
                 if (room.length > 1){
                     socket.emit("DEBUG", room.people);
                     //TODO Send Push notification
                 }
+*/
                 //io.sockets.in(socket.room).emit("DEBUG", socket.room, people[socket.id]);
 				//Limit Chat History
 				//if (_.size(chatHistory[socket.room]) > 10) {
