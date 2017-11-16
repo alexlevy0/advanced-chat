@@ -9,14 +9,13 @@
     "node-uuid": "~1.4.1",
     "nodemon": "~1.0.13",
     "npid": "~0.4.0",
-    "socket.io": "~0.9.16",
+    "socket.io": "~1.0.1",
     "shrinkwrap": "~0.0.3",
     "underscore": "~1.5.2",
     "bower": "~1.2.8"
   },
   "devDependencies": {},
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/satrapade/advanced-chat.git"
