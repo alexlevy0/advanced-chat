@@ -12,11 +12,10 @@
     "socket.io": "~0.9.16",
     "shrinkwrap": "~0.0.3",
     "underscore": "~1.5.2",
-    "bower": "~1.2.8"
+    "bower": "~1.7.5"
   },
   "devDependencies": {},
-  "scripts": {
-  },
+  "scripts": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/satrapade/advanced-chat.git"
