@@ -12,10 +12,13 @@
     "socket.io": "~0.9.16",
     "shrinkwrap": "~0.1.0",
     "underscore": "~1.5.2",
-    "bower": "~1.7.5"
+    "bower": "~1.7.5",
+    "snyk": "^1.89.0"
   },
   "devDependencies": {},
   "scripts": {
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -28,5 +31,6 @@
   "bugs": {
     "url": "https://github.com/satrapade/advanced-chat/issues"
   },
-  "homepage": "https://github.com/satrapade/advanced-chat"
+  "homepage": "https://github.com/satrapade/advanced-chat",
+  "snyk": true
 }
