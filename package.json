@@ -11,7 +11,7 @@
     "npid": "~0.4.0",
     "socket.io": "~0.9.16",
     "shrinkwrap": "~0.1.0",
-    "underscore": "~1.5.2",
+    "underscore": "~1.12.1",
     "bower": "~1.7.5"
   },
   "devDependencies": {},
